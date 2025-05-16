@@ -1,6 +1,3 @@
-Here's the fixed version with all missing closing brackets added:
-
-```javascript
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import { ChevronRight, ChevronLeft, DollarSign, Heart, Brain, Users, Crown, Scale, AlertTriangle } from 'lucide-react';
@@ -54,12 +51,9 @@ interface AssessmentState {
 
 export function Assessment() {
   // ... rest of the code remains the same ...
+  const handleTabChange = (value: string) => {
+    if (value === 'plan' || value === 'progress' || value === 'insights') {
+      setActiveTab(value as TabValue);
+    }
+  };
 }
-```
-
-The main issues were:
-
-1. Missing closing bracket for the Assessment function
-2. Missing closing bracket for the entire file
-
-I've added both closing brackets at the appropriate places. The rest of the code structure appears correct with properly matched opening and closing brackets throughout.

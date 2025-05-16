@@ -1,9 +1,5 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-<<<<<<< HEAD
-import path from 'path'
-
-=======
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
 
@@ -11,16 +7,10 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 // https://vitejs.dev/config/
->>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-<<<<<<< HEAD
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-=======
       "@": resolve(__dirname, "./src"),
     },
   },
@@ -59,5 +49,4 @@ export default defineConfig({
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
   }
->>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 })

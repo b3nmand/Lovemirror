@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { DeepSeek } from 'npm:deepseek-ai@0.9.0';
-=======
 import OpenAI from 'npm:openai@4.28.0';
->>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 import { createClient } from 'npm:@supabase/supabase-js@2.39.7';
 
 const corsHeaders = {
@@ -26,81 +22,61 @@ Deno.serve(async (req) => {
 
   try {
     const { assessment_id } = await req.json();
+    console.log('Received request for assessment ID:', assessment_id);
 
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-<<<<<<< HEAD
     // Fetch assessment data
+    console.log('Fetching assessment data...');
     const { data: assessment, error: assessmentError } = await supabase
       .from('assessment_history')
       .select('*')
-=======
-    // Fetch assessment data with category names
-    const { data: assessment, error: assessmentError } = await supabase
-      .from('assessment_history')
-      .select(`
-        *,
-        category_scores,
-        unified_assessment_categories!inner(
-          name,
-          description
-        )
-      `)
->>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
       .eq('id', assessment_id)
       .single();
 
-    if (assessmentError) throw assessmentError;
-
-<<<<<<< HEAD
-    // Initialize DeepSeek
-    const deepseek = new DeepSeek(Deno.env.get('DEEPSEEK_API_KEY')!);
-
-    // Prepare the prompt
-    const prompt = `As an AI coach, analyze this assessment data and create a personalized development plan:
+    if (assessmentError) {
+      console.error('Error fetching assessment:', assessmentError);
+      throw assessmentError;
+    }
     
-    Overall Score: ${assessment.overall_score}
-    Category Scores: ${JSON.stringify(assessment.category_scores, null, 2)}
+    if (!assessment) {
+      throw new Error('Assessment not found');
+    }
+    
+    console.log('Assessment found:', assessment.id);
+    
+    // Fetch categories separately
+    const categoryIds = assessment.category_scores.map((score: any) => score.category_id);
+    console.log('Fetching categories for IDs:', categoryIds);
+    
+    const { data: categories, error: categoriesError } = await supabase
+      .from('unified_assessment_categories')
+      .select('id, name, description')
+      .in('id', categoryIds);
+      
+    if (categoriesError) {
+      console.error('Error fetching categories:', categoriesError);
+      throw categoriesError;
+    }
+    
+    console.log('Categories found:', categories.length);
 
-    Create a comprehensive development plan with these sections:
-    1. Self-Awareness Development
-    2. Relationship Compatibility Enhancement
-    3. Reality Alignment Strategies
-
-    For each section include:
-    - Current status analysis
-    - Specific goals
-    - Weekly action items
-    - Progress metrics
-    - Recommended resources
-    - Implementation timeline`;
-
-    // Get AI response
-    const response = await deepseek.complete({
-      prompt,
-      max_tokens: 1000,
-      temperature: 0.7
-    });
-
-    // Parse and structure the AI response
-    const developmentPlan = {
-      timestamp: new Date().toISOString(),
-      assessment_id: assessment_id,
-      plan: response.choices[0].text
-=======
     // Initialize OpenAI client
+    console.log('Initializing OpenAI client...');
     const openai = new OpenAI({
       apiKey: Deno.env.get('OPENAI_API_KEY')!,
     });
-
-    // Prepare assessment data with category names
+    
+    // Map categories to scores
     const categoryScores = assessment.category_scores.map((score: any) => {
-      const category = assessment.unified_assessment_categories.find(
-        (c: any) => c.id === score.category_id
-      );
+      const category = categories.find((c: any) => c.id === score.category_id) || {
+        name: 'Unknown Category',
+        description: 'Category details not available'
+      };
+      
       return {
         category: category.name,
         score: score.score,
@@ -112,6 +88,8 @@ Deno.serve(async (req) => {
     const sortedScores = [...categoryScores].sort((a, b) => b.score - a.score);
     const strengths = sortedScores.slice(0, 2);
     const improvements = sortedScores.slice(-2);
+    
+    console.log('Prepared assessment data with strengths and improvements');
 
     // Create a focused, actionable prompt
     const prompt = `Create a clear, actionable development plan based on this assessment:
@@ -154,6 +132,7 @@ List 5 specific daily habits that will drive improvement, formatted as:
 
 Keep the language clear, direct, and actionable. Focus on practical steps rather than theory.`;
 
+    console.log('Sending request to OpenAI...');
     // Get AI response with specific parameters for clarity
     const chatCompletion = await openai.chat.completions.create({
       messages: [
@@ -166,19 +145,22 @@ Keep the language clear, direct, and actionable. Focus on practical steps rather
           content: prompt
         }
       ],
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       temperature: 0.7,
       max_tokens: 1500,
       frequency_penalty: 0.5,
       presence_penalty: 0.3
     });
+    
+    console.log('Received response from OpenAI');
 
     const developmentPlan = {
       timestamp: new Date().toISOString(),
       assessment_id: assessment_id,
       plan: chatCompletion.choices[0].message.content || ''
->>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
     };
+    
+    console.log('Plan generated successfully, storing in database...');
 
     // Store the plan in Supabase
     const { error: storageError } = await supabase
@@ -188,7 +170,12 @@ Keep the language clear, direct, and actionable. Focus on practical steps rather
         plan_data: developmentPlan
       });
 
-    if (storageError) throw storageError;
+    if (storageError) {
+      console.error('Error storing plan:', storageError);
+      throw storageError;
+    }
+    
+    console.log('Plan stored successfully');
 
     return new Response(
       JSON.stringify(developmentPlan),
@@ -200,17 +187,12 @@ Keep the language clear, direct, and actionable. Focus on practical steps rather
       }
     );
   } catch (error) {
-<<<<<<< HEAD
-    return new Response(
-      JSON.stringify({ error: error.message }),
-=======
     console.error('AI Coach Error:', error);
     return new Response(
       JSON.stringify({ 
         error: error.message,
         details: 'Failed to generate development plan'
       }),
->>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
       {
         status: 500,
         headers: {
