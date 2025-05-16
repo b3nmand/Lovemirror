@@ -1,7 +1,11 @@
 import { DevelopmentPlan } from '../types/assessment';
 
 const CACHE_PREFIX = 'ai_coach_';
+<<<<<<< HEAD
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+=======
+const CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
 interface CacheEntry<T> {
   data: T;

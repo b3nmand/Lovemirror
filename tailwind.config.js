@@ -58,5 +58,9 @@ module.exports = {
       },
     },
   },
+<<<<<<< HEAD
   plugins: [],
+=======
+  plugins: [require('@tailwindcss/typography')],
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 }

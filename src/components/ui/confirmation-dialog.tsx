@@ -19,6 +19,10 @@ interface ConfirmationDialogProps {
   onConfirm: () => void;
   variant?: "default" | "destructive";
   loading?: boolean;
+<<<<<<< HEAD
+=======
+  children?: React.ReactNode;
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 }
 
 export function ConfirmationDialog({
@@ -31,6 +35,10 @@ export function ConfirmationDialog({
   onConfirm,
   variant = "default",
   loading = false,
+<<<<<<< HEAD
+=======
+  children
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 }: ConfirmationDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -39,6 +47,12 @@ export function ConfirmationDialog({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
+<<<<<<< HEAD
+=======
+        
+        {children}
+        
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         <DialogFooter>
           <Button
             variant="outline"

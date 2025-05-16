@@ -22,12 +22,17 @@ Deno.serve(async (req) => {
 
   try {
     const { assessment_id } = await req.json();
+<<<<<<< HEAD
+=======
+    console.log('Received request for assessment ID:', assessment_id);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+<<<<<<< HEAD
     // Fetch assessment data with category names
     const { data: assessment, error: assessmentError } = await supabase
       .from('assessment_history')
@@ -54,6 +59,55 @@ Deno.serve(async (req) => {
       const category = assessment.unified_assessment_categories.find(
         (c: any) => c.id === score.category_id
       );
+=======
+    // Fetch assessment data
+    console.log('Fetching assessment data...');
+    const { data: assessment, error: assessmentError } = await supabase
+      .select('*')
+      .eq('id', assessment_id)
+      .single();
+
+    if (assessmentError) {
+      console.error('Error fetching assessment:', assessmentError);
+      throw assessmentError;
+    }
+    
+    if (!assessment) {
+      throw new Error('Assessment not found');
+    }
+    
+    console.log('Assessment found:', assessment.id);
+    
+    // Fetch categories separately
+    const categoryIds = assessment.category_scores.map((score: any) => score.category_id);
+    console.log('Fetching categories for IDs:', categoryIds);
+    
+    const { data: categories, error: categoriesError } = await supabase
+      .from('unified_assessment_categories')
+      .select('id, name, description')
+      .in('id', categoryIds);
+      
+    if (categoriesError) {
+      console.error('Error fetching categories:', categoriesError);
+      throw categoriesError;
+    }
+    
+    console.log('Categories found:', categories.length);
+
+    // Initialize OpenAI client
+    console.log('Initializing OpenAI client...');
+    const openai = new OpenAI({
+      apiKey: Deno.env.get('OPENAI_API_KEY')!,
+    });
+    
+    // Map categories to scores
+    const categoryScores = assessment.category_scores.map((score: any) => {
+      const category = categories.find((c: any) => c.id === score.category_id) || {
+        name: 'Unknown Category',
+        description: 'Category details not available'
+      };
+      
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
       return {
         category: category.name,
         score: score.score,
@@ -65,6 +119,11 @@ Deno.serve(async (req) => {
     const sortedScores = [...categoryScores].sort((a, b) => b.score - a.score);
     const strengths = sortedScores.slice(0, 2);
     const improvements = sortedScores.slice(-2);
+<<<<<<< HEAD
+=======
+    
+    console.log('Prepared assessment data with strengths and improvements');
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
     // Create a focused, actionable prompt
     const prompt = `Create a clear, actionable development plan based on this assessment:
@@ -107,6 +166,10 @@ List 5 specific daily habits that will drive improvement, formatted as:
 
 Keep the language clear, direct, and actionable. Focus on practical steps rather than theory.`;
 
+<<<<<<< HEAD
+=======
+    console.log('Sending request to OpenAI...');
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
     // Get AI response with specific parameters for clarity
     const chatCompletion = await openai.chat.completions.create({
       messages: [
@@ -119,18 +182,32 @@ Keep the language clear, direct, and actionable. Focus on practical steps rather
           content: prompt
         }
       ],
+<<<<<<< HEAD
       model: "gpt-4",
+=======
+      model: "gpt-3.5-turbo",
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
       temperature: 0.7,
       max_tokens: 1500,
       frequency_penalty: 0.5,
       presence_penalty: 0.3
     });
+<<<<<<< HEAD
+=======
+    
+    console.log('Received response from OpenAI');
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
     const developmentPlan = {
       timestamp: new Date().toISOString(),
       assessment_id: assessment_id,
       plan: chatCompletion.choices[0].message.content || ''
     };
+<<<<<<< HEAD
+=======
+    
+    console.log('Plan generated successfully, storing in database...');
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
     // Store the plan in Supabase
     const { error: storageError } = await supabase
@@ -140,7 +217,16 @@ Keep the language clear, direct, and actionable. Focus on practical steps rather
         plan_data: developmentPlan
       });
 
+<<<<<<< HEAD
     if (storageError) throw storageError;
+=======
+    if (storageError) {
+      console.error('Error storing plan:', storageError);
+      throw storageError;
+    }
+    
+    console.log('Plan stored successfully');
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
     return new Response(
       JSON.stringify(developmentPlan),

@@ -28,9 +28,35 @@ export function TaskList({ planData, onTaskUpdate }: TaskListProps) {
     );
     
     // Update the plan if callback provided
+<<<<<<< HEAD
     if (onTaskUpdate && typeof planData === 'string') {
       const updatedPlan = updateTaskStatus(planData, taskText, completed);
       onTaskUpdate(updatedPlan);
+=======
+    if (onTaskUpdate) {
+      // Handle different types of plan data
+      try {
+        let updatedPlan;
+        if (typeof planData === 'string') {
+          updatedPlan = updateTaskStatus(planData, taskText, completed);
+        } else if (planData && typeof planData === 'object' && 'plan' in planData) {
+          const planValue = (planData as any).plan;
+          if (typeof planValue === 'string') {
+            updatedPlan = updateTaskStatus(planValue, taskText, completed);
+          } else {
+            updatedPlan = updateTaskStatus(JSON.stringify(planData), taskText, completed);
+          }
+        } else {
+          updatedPlan = updateTaskStatus(JSON.stringify(planData), taskText, completed);
+        }
+        
+        if (updatedPlan) {
+          onTaskUpdate(updatedPlan);
+        }
+      } catch (err) {
+        console.error('Error updating task status:', err);
+      }
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
     }
   };
   
@@ -80,7 +106,11 @@ export function TaskList({ planData, onTaskUpdate }: TaskListProps) {
                   />
                   <label 
                     htmlFor={`task-${category}-${index}`}
+<<<<<<< HEAD
                     className={`${task.completed ? 'line-through text-muted-foreground' : ''}`}
+=======
+                    className={`${task.completed ? 'line-through text-muted-foreground' : 'text-gray-800'}`}
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
                   >
                     {task.text}
                   </label>

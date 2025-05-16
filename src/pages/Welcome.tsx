@@ -1,6 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { Heart, Scale, Crown, Gem } from 'lucide-react';
+=======
+import { Scale, Crown, Gem } from 'lucide-react';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 
@@ -11,7 +15,11 @@ export function Welcome() {
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       <Card className="max-w-md w-full bg-black/20 backdrop-blur-sm border-gray-800">
         <CardHeader className="text-center space-y-2">
+<<<<<<< HEAD
           <Heart className="w-20 h-20 text-pink-500 mx-auto mb-4" />
+=======
+          <img src="/lovemirror_nobg_logo.png" width="200" className="mx-auto mb-4" alt="Love Mirror Logo" />
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
           <CardTitle className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 bg-clip-text text-transparent">
             Discover Your True Value
           </CardTitle>

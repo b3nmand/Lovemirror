@@ -1,5 +1,9 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+<<<<<<< HEAD
+=======
+import { AlertCircle, CheckCircle } from "lucide-react"
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 import { cn } from "@/lib/utils"
 
 const alertVariants = cva(
@@ -8,6 +12,10 @@ const alertVariants = cva(
     variants: {
       variant: {
         default: "bg-background text-foreground",
+<<<<<<< HEAD
+=======
+        success: "border-green-500/50 text-green-600 dark:border-green-500 [&>svg]:text-green-600",
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         destructive:
           "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
       },
@@ -55,4 +63,25 @@ const AlertDescription = React.forwardRef<
 ))
 AlertDescription.displayName = "AlertDescription"
 
+<<<<<<< HEAD
 export { Alert, AlertTitle, AlertDescription }
+=======
+// Success Alert Component
+const SuccessAlert = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, children, ...props }, ref) => (
+  <Alert
+    ref={ref}
+    variant="success"
+    className={cn("bg-green-50 border-green-200", className)}
+    {...props}
+  >
+    <CheckCircle className="h-4 w-4" />
+    <AlertDescription>{children}</AlertDescription>
+  </Alert>
+))
+SuccessAlert.displayName = "SuccessAlert"
+
+export { Alert, AlertTitle, AlertDescription, SuccessAlert }
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)

@@ -9,6 +9,10 @@ interface CircularProgressProps {
   label?: string;
   color?: string;
   className?: string;
+<<<<<<< HEAD
+=======
+  textClassName?: string;
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 }
 
 export function CircularProgress({

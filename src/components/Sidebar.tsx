@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { BarChart3, Target, BookOpen, Settings as SettingsIcon, Users, Award, Crown, Diamond, Scale, LogIn } from 'lucide-react';
+=======
+import { BarChart3, Target, BookOpen, Settings as SettingsIcon, Users, Award, Crown, Diamond, Scale, LogIn, LogOut, Mail, Heart } from 'lucide-react';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 import { AssessmentScores } from './AssessmentScores';
 import { Menu, X, TrendingUp } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { getAssessmentType } from '../lib/assessmentType';
 import type { Profile } from '../types/profile';
 import { Ad } from './Ad';
+<<<<<<< HEAD
 import { Button } from './ui/button';
 import { ScrollArea } from './ui/scroll-area';
 import { Card, CardContent } from './ui/card';
+=======
+import { ConnectionStatus } from './ui/connection-status';
+import { Button } from './ui/button';
+import { ScrollArea } from './ui/scroll-area';
+import { Card, CardContent } from './ui/card';
+import { BookAd } from './BookAd';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
 interface SidebarProps {
   isMobile?: boolean;
@@ -24,6 +36,10 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [assessmentHistory, setAssessmentHistory] = useState<any[]>([]);
+<<<<<<< HEAD
+=======
+  const [emailVerified, setEmailVerified] = useState(true);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
   useEffect(() => {
     checkUser();
@@ -63,8 +79,16 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
 
   const checkUser = async () => {
     try {
+<<<<<<< HEAD
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
+=======
+      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      if (currentUser) {
+        setEmailVerified(!!currentUser.email_confirmed_at);
+      }
+      setUser(currentUser);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
     } catch (error) {
       console.error('Error checking auth state:', error);
     } finally {
@@ -97,6 +121,18 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
     );
   }
 
+<<<<<<< HEAD
+=======
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
   const isActive = (path: string) => {
     return location.pathname === path;
   };
@@ -271,6 +307,22 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
                           )}
                         </>
                       )}
+<<<<<<< HEAD
+=======
+
+                      {/* Compatibility Score Link */}
+                      <button
+                        onClick={() => handleNavigation('/compatibility')}
+                        className={`flex items-center px-4 py-2 rounded-lg transition-all w-full text-left ${
+                          location.pathname.includes('/compatibility')
+                            ? 'bg-pink-50 text-pink-700'
+                            : 'hover:bg-gray-50'
+                        }`}
+                      >
+                        <Heart className="w-4 h-4 mr-3" />
+                        <span className="font-medium">Compatibility Score</span>
+                      </button>
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
                     </div>
                   </li>
                 )}
@@ -340,6 +392,7 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
                     <span className="font-medium">Settings</span>
                   </button>
                 </li>
+<<<<<<< HEAD
                 <li className="mt-4">
                   <Ad slot="sidebar" />
                   <div className="mt-4">
@@ -348,10 +401,42 @@ export function Sidebar({ isMobile = false, isOpen = false, onClose }: SidebarPr
                 </li>
               </ul>
             </nav>
+=======
+                {!emailVerified && (
+                  <li>
+                    <button
+                      onClick={() => handleNavigation('/settings')}
+                      className="flex items-center px-4 py-3 rounded-lg transition-all bg-amber-50 text-amber-700 w-full text-left"
+                    >
+                      <Mail className="w-5 h-5 mr-3" />
+                      <span className="font-medium">Verify Email</span>
+                    </button>
+                  </li>
+                )}
+                <li className="mt-2">
+                  <button
+                    onClick={handleSignOut}
+                    className={`flex items-center px-4 py-3 rounded-lg transition-all hover:bg-red-50 hover:text-red-700 w-full text-left`}
+                  >
+                    <LogOut className="w-4 h-4 mr-3" />
+                    <span className="font-medium">Sign Out</span>
+                  </button>
+                </li>
+              </ul>
+            </nav>
+            {/* Book Ad Integration */}
+            <BookAd />
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
             
             <div className="mt-8">
               <h2 className="text-lg font-semibold mb-4">Assessment Scores</h2>
               <AssessmentScores />
+<<<<<<< HEAD
+=======
+              <div className="mt-4 flex justify-end">
+                <ConnectionStatus showText={false} />
+              </div>
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
             </div>
           </div>
         </ScrollArea>

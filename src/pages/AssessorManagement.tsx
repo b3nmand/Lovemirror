@@ -3,13 +3,20 @@ import { Users, Mail, Trash2, RefreshCw, AlertCircle, CheckCircle, Clock, Crown,
 import { supabase } from '../lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+<<<<<<< HEAD
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+=======
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DeleteConfirmationDialog } from '@/components/ui/delete-confirmation-dialog';
 import { TooltipWrapper } from '@/components/ui/tooltip-wrapper';
+<<<<<<< HEAD
+=======
+import { InviteAssessor } from '@/components/InviteAssessor';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
 interface Assessor {
   id: string;
@@ -32,6 +39,7 @@ export function AssessorManagement() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
+<<<<<<< HEAD
   const [showInviteUrl, setShowInviteUrl] = useState<string | null>(null);
   const [copiedInviteCode, setCopiedInviteCode] = useState<string | null>(null);
   const [deleteAssessorId, setDeleteAssessorId] = useState<string | null>(null);
@@ -41,6 +49,11 @@ export function AssessorManagement() {
     assessment_type: '',
   });
   const [submitting, setSubmitting] = useState(false);
+=======
+  const [copiedInviteCode, setCopiedInviteCode] = useState<string | null>(null);
+  const [deleteAssessorId, setDeleteAssessorId] = useState<string | null>(null);
+  const [showInviteForm, setShowInviteForm] = useState(true);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
   useEffect(() => {
     fetchAssessors();
@@ -66,6 +79,10 @@ export function AssessorManagement() {
 
   const fetchAssessors = async () => {
     try {
+<<<<<<< HEAD
+=======
+      setLoading(true);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('No user found');
 
@@ -85,6 +102,7 @@ export function AssessorManagement() {
     }
   };
 
+<<<<<<< HEAD
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -129,6 +147,12 @@ export function AssessorManagement() {
     } finally {
       setSubmitting(false);
     }
+=======
+  const handleInviteSent = () => {
+    setSuccess('Invitation sent successfully!');
+    fetchAssessors(); // Refresh the list
+    setShowInviteForm(false); // Hide the form after successful invitation
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
   };
 
   const handleResendInvite = async (assessorId: string) => {
@@ -171,6 +195,10 @@ export function AssessorManagement() {
       setTimeout(() => setCopiedInviteCode(null), 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
+<<<<<<< HEAD
+=======
+      setError('Failed to copy invite link to clipboard');
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
     }
   };
 
@@ -183,8 +211,13 @@ export function AssessorManagement() {
   }
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-12 px-4">
       <div className="max-w-4xl mx-auto">
+=======
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-8 px-2 sm:px-4">
+      <div className="max-w-2xl mx-auto w-full">
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         <Card className="text-center mb-12 bg-white/80 backdrop-blur-sm border-none">
           <CardHeader>
             <Users className="w-16 h-16 text-primary mx-auto mb-4" />
@@ -209,6 +242,7 @@ export function AssessorManagement() {
           </Alert>
         )}
 
+<<<<<<< HEAD
         <Card className="mb-8">
           <CardHeader>
             <CardTitle>Invite New Assessor</CardTitle>
@@ -318,6 +352,26 @@ export function AssessorManagement() {
         </Card>
 
         <Card>
+=======
+        {showInviteForm ? (
+          <Card className="mb-8 w-full">
+            <InviteAssessor onInviteSent={handleInviteSent} />
+          </Card>
+        ) : (
+          <div className="mb-8 flex justify-end w-full">
+            <Button 
+              onClick={() => setShowInviteForm(true)}
+              variant="outline"
+              className="w-full"
+            >
+              <Mail className="mr-2 h-4 w-4" />
+              New Invitation
+            </Button>
+          </div>
+        )}
+
+        <Card className="w-full">
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
           <CardHeader>
             <CardTitle>Invited Assessors</CardTitle>
             <CardDescription>
@@ -330,9 +384,24 @@ export function AssessorManagement() {
               <div className="text-center py-8 text-muted-foreground">
                 <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>No assessors invited yet</p>
+<<<<<<< HEAD
               </div>
             ) : (
               <Table>
+=======
+                {!showInviteForm && (
+                  <Button 
+                    onClick={() => setShowInviteForm(true)}
+                    variant="link"
+                    className="mt-2 w-full"
+                  >
+                    Invite your first assessor
+                  </Button>
+                )}
+              </div>
+            ) : (
+              <Table className="w-full">
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
                 <TableHeader>
                   <TableRow>
                     <TableHead>Email</TableHead>
@@ -378,7 +447,11 @@ export function AssessorManagement() {
                         </span>
                       </TableCell>
                       <TableCell>
+<<<<<<< HEAD
                         <div className="flex space-x-2">
+=======
+                        <div className="flex space-x-2 w-full">
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
                           <TooltipWrapper content="Copy invite link">
                             <Button
                               variant="ghost"
@@ -425,6 +498,28 @@ export function AssessorManagement() {
               </Table>
             )}
           </CardContent>
+<<<<<<< HEAD
+=======
+          
+          {assessors.length > 0 && (
+            <CardFooter className="flex justify-between w-full">
+              <div className="text-sm text-muted-foreground">
+                {assessors.filter(a => a.status === 'completed').length} of {assessors.length} assessments completed
+              </div>
+              {!showInviteForm && (
+                <Button 
+                  onClick={() => setShowInviteForm(true)}
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                >
+                  <Mail className="mr-2 h-4 w-4" />
+                  New Invitation
+                </Button>
+              )}
+            </CardFooter>
+          )}
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         </Card>
       </div>
 

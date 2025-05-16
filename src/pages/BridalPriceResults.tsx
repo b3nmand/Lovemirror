@@ -5,6 +5,10 @@ import { ResponsiveRadar } from '@nivo/radar';
 import { supabase } from '../lib/supabase';
 import { CircularProgress } from '../components/CircularProgress';
 import confetti from 'canvas-confetti';
+<<<<<<< HEAD
+=======
+import { Card } from '@/components/ui/card';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
 interface CategoryScore {
   category_id: string;
@@ -48,7 +52,13 @@ export function BridalPriceResults() {
   const fetchAssessment = async () => {
     try {
       setLoading(true);
+<<<<<<< HEAD
       setError('');
+=======
+      
+      // Initialize error state if it doesn't exist
+      let errorMessage = '';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
       const { data, error } = await supabase
         .from('assessment_history')
@@ -58,7 +68,12 @@ export function BridalPriceResults() {
 
       if (error) {
         if (error.code === 'PGRST116') {
+<<<<<<< HEAD
           throw new Error('Assessment not found');
+=======
+          errorMessage = 'Assessment not found';
+          throw new Error(errorMessage);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         }
         throw error;
       }
@@ -69,7 +84,12 @@ export function BridalPriceResults() {
         .eq('assessment_type', 'bridal-price');
 
       if (!categories?.length) {
+<<<<<<< HEAD
         throw new Error('Failed to load assessment categories');
+=======
+        errorMessage = 'Failed to load assessment categories';
+        throw new Error(errorMessage);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
       }
 
       const enrichedAssessment = {
@@ -102,7 +122,13 @@ export function BridalPriceResults() {
       }
     } catch (err) {
       console.error('Error fetching assessment:', err);
+<<<<<<< HEAD
       setError(err instanceof Error ? err.message : 'Failed to load assessment results');
+=======
+      // Define setError function if it doesn't exist
+      const errorMsg = err instanceof Error ? err.message : 'Failed to load assessment results';
+      console.error(errorMsg);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
     } finally {
       setLoading(false);
     }
@@ -253,7 +279,21 @@ export function BridalPriceResults() {
               ))}
             </div>
             <div className="mt-8">
+<<<<<<< HEAD
               <Ad slot="results" />
+=======
+              <Card className="bg-gradient-to-r from-blue-500/10 to-violet-500/10 p-6">
+                <div className="text-xs text-gray-500 mb-2 opacity-75">Advertisement</div>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Relationship Coaching</h4>
+                <p className="text-sm text-gray-600 mb-4">Get personalized advice from expert coaches</p>
+                <a
+                  href="#"
+                  className="inline-block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center bg-white text-gray-700 hover:bg-gray-50"
+                >
+                  Learn More
+                </a>
+              </Card>
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
             </div>
           </div>
 

@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { User, Heart, AlertCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+=======
+import { User, Heart, AlertCircle, Loader2 } from 'lucide-react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { supabase } from '../lib/supabase';
+import { profileSchema, type ProfileFormData } from '../lib/validationSchemas';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+<<<<<<< HEAD
 
 interface FormErrors {
   [key: string]: string;
@@ -74,21 +83,68 @@ export function ProfileSetup() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('No user found');
+=======
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+
+export function ProfileSetup() {
+  const navigate = useNavigate();
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+
+  // Initialize form with zod resolver
+  const form = useForm<ProfileFormData>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      name: '',
+      age: undefined,
+      gender: undefined,
+      region: undefined,
+      culturalContext: 'global',
+    }
+  });
+
+  const handleSubmit = async (formData: ProfileFormData) => {
+    setError('');
+    setLoading(true);
+    console.log('Submitting profile data:', formData);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        console.error('No user found during profile setup');
+        throw new Error('No user found. Please sign in again.');
+      }
+      
+      console.log('Creating profile for user ID:', user.id);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
       const { error: profileError } = await supabase
         .from('profiles')
         .upsert({
           id: user.id,
           name: formData.name,
+<<<<<<< HEAD
           age: parseInt(formData.age),
+=======
+          age: formData.age,
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
           gender: formData.gender,
           region: formData.region,
           cultural_context: formData.culturalContext,
           updated_at: new Date().toISOString(),
         });
 
+<<<<<<< HEAD
       if (profileError) throw profileError;
       
+=======
+      if (profileError) {
+        console.error('Error creating profile:', profileError);
+        throw profileError;
+      }
+      
+      console.log('Profile created successfully, redirecting to dashboard');
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
       navigate('/dashboard');
     } catch (err) {
       setError('Failed to save profile. Please try again.');
@@ -99,10 +155,17 @@ export function ProfileSetup() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-purple-50 to-pink-50">
       <Card className="max-w-md w-full">
         <CardHeader className="text-center">
           <Heart className="w-16 h-16 text-pink-500 mx-auto mb-4" />
+=======
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-purple-50 to-pink-50 py-12">
+      <Card className="max-w-md w-full">
+        <CardHeader className="text-center">
+          <img src="/lovemirror_nobg_logo.png" alt="Love Mirror Logo" className="w-16 h-16 mx-auto mb-4" />
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
           <CardTitle className="text-3xl">Complete Your Profile</CardTitle>
           <CardDescription>Tell us about yourself to get personalized insights</CardDescription>
         </CardHeader>
@@ -114,6 +177,7 @@ export function ProfileSetup() {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
+<<<<<<< HEAD
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
@@ -222,6 +286,141 @@ export function ProfileSetup() {
               )}
             </Button>
           </form>
+=======
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+              <FormField 
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} 
+              />
+              
+              <FormField
+                control={form.control}
+                name="age"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Age</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="number" 
+                        min="18" 
+                        max="120" 
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              /> 
+              
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gender</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select gender" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="male">Male</SelectItem>
+                        <SelectItem value="female">Female</SelectItem> 
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="region"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Region</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select region" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="africa">Africa</SelectItem>
+                        <SelectItem value="asia">Asia</SelectItem> 
+                        <SelectItem value="europe">Europe</SelectItem>
+                        <SelectItem value="north_america">North America</SelectItem>
+                        <SelectItem value="south_america">South America</SelectItem>
+                        <SelectItem value="oceania">Oceania</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              /> 
+              
+              {form.watch('gender') === 'female' && form.watch('region') === 'africa' && (
+                <FormField
+                  control={form.control}
+                  name="culturalContext"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cultural Context</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select cultural context" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="global">Global Context</SelectItem>
+                          <SelectItem value="african">African Context</SelectItem> 
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+              
+              <Button
+                type="submit" 
+                className="w-full"
+                disabled={loading}
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                    Setting Up Your Profile...
+                  </div>
+                ) : ( 
+                  'Continue to Assessment'
+                )}
+              </Button>
+            </form>
+          </Form>
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         </CardContent>
       </Card>
     </div>

@@ -7,7 +7,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+<<<<<<< HEAD
 # Dependencies
+=======
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 node_modules
 dist
 dist-ssr
@@ -23,6 +26,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
 
 # Environment variables
 .env
@@ -30,3 +34,5 @@ dist-ssr
 .env.development.local
 .env.test.local
 .env.production.local
+=======
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)

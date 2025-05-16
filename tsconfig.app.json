@@ -18,7 +18,17 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+<<<<<<< HEAD
     "noFallthroughCasesInSwitch": true
+=======
+    "noFallthroughCasesInSwitch": true,
+
+    /* Path Aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
   },
   "include": ["src"]
 }

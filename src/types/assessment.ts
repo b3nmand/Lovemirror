@@ -4,6 +4,24 @@ export interface AssessmentType {
   description: string;
 }
 
+<<<<<<< HEAD
+=======
+export interface Category {
+  id: string;
+  name: string;
+  weight: number;
+  description: string;
+}
+
+export interface Question {
+  id: string;
+  category_id: string;
+  question_text: string;
+  min_value: number;
+  max_value: number;
+}
+
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 export interface AssessmentScore {
   id: string;
   assessment_id: string;
@@ -45,6 +63,15 @@ export interface DevelopmentPlan {
   timestamp: string;
   assessment_id: string;
   plan: string;
+<<<<<<< HEAD
+=======
+  version_info?: {
+    timestamp: string;
+    source: 'self_assessment' | 'compatibility_score' | 'delusional_score';
+    version: number;
+  };
+  model_used?: string;
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 }
 
 export const SCORE_RANGES: ScoreRange[] = [

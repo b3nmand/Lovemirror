@@ -17,6 +17,10 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
+<<<<<<< HEAD
+=======
+        gradient: "bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:opacity-90 transition-colors",
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

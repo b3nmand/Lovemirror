@@ -5,6 +5,11 @@ import { ResponsiveRadar } from '@nivo/radar';
 import { supabase } from '../lib/supabase';
 import { CircularProgress } from '../components/CircularProgress';
 import confetti from 'canvas-confetti';
+<<<<<<< HEAD
+=======
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
 interface CategoryScore {
   category_id: string;
@@ -34,7 +39,13 @@ export function WifeMaterialResults() {
   const fetchAssessment = async () => {
     try {
       setLoading(true);
+<<<<<<< HEAD
       setError('');
+=======
+      
+      // Initialize error state if it doesn't exist
+      let errorMessage = '';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
       const { data, error } = await supabase
         .from('assessment_history')
@@ -44,7 +55,12 @@ export function WifeMaterialResults() {
 
       if (error) {
         if (error.code === 'PGRST116') {
+<<<<<<< HEAD
           throw new Error('Assessment not found');
+=======
+          errorMessage = 'Assessment not found';
+          throw new Error(errorMessage);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         }
         throw error;
       }
@@ -55,7 +71,12 @@ export function WifeMaterialResults() {
         .eq('assessment_type', 'wife-material');
 
       if (!categories?.length) {
+<<<<<<< HEAD
         throw new Error('Failed to load assessment categories');
+=======
+        errorMessage = 'Failed to load assessment categories';
+        throw new Error(errorMessage);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
       }
 
       const enrichedAssessment = {
@@ -84,7 +105,13 @@ export function WifeMaterialResults() {
       }
     } catch (err) {
       console.error('Error fetching assessment:', err);
+<<<<<<< HEAD
       setError(err instanceof Error ? err.message : 'Failed to load assessment results');
+=======
+      // Define setError function if it doesn't exist
+      const errorMsg = err instanceof Error ? err.message : 'Failed to load assessment results';
+      console.error(errorMsg);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
     } finally {
       setLoading(false);
     }
@@ -131,6 +158,21 @@ export function WifeMaterialResults() {
     );
   }
 
+<<<<<<< HEAD
+=======
+  if (!assessment || assessment.overall_score == null) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">No Results Found</h2>
+        <p className="text-gray-600 mb-6">
+          We couldn't find your assessment results. Please try again or retake the assessment.
+        </p>
+        <Button onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
+      </div>
+    );
+  }
+
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
   const badge = getBadgeLevel(assessment.overall_score);
   const radarData = assessment.category_scores.map(score => ({
     category: score.category_name,
@@ -144,7 +186,15 @@ export function WifeMaterialResults() {
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Wife Material Assessment</h1>
           <div className="inline-flex items-center px-6 py-2 rounded-full bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30">
             <span className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+<<<<<<< HEAD
               Global Wife Rating: {assessment.overall_score.toFixed(1)}%
+=======
+              Global Wife Rating: {assessment?.overall_score != null ? (
+                <span>{assessment.overall_score.toFixed(1)}%</span>
+              ) : (
+                <span>N/A</span>
+              )}
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
             </span>
           </div>
           <div className="mt-4">
@@ -191,7 +241,21 @@ export function WifeMaterialResults() {
               );
             })}
             <div className="mt-8">
+<<<<<<< HEAD
               <Ad slot="results" />
+=======
+              <Card className="bg-gradient-to-r from-blue-500/10 to-violet-500/10 p-6">
+                <div className="text-xs text-gray-500 mb-2 opacity-75">Advertisement</div>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Relationship Coaching</h4>
+                <p className="text-sm text-gray-600 mb-4">Get personalized advice from expert coaches</p>
+                <a
+                  href="#"
+                  className="inline-block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center bg-white text-gray-700 hover:bg-gray-50"
+                >
+                  Learn More
+                </a>
+              </Card>
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
             </div>
           </div>
 

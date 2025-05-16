@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface AdProps {
+<<<<<<< HEAD
   slot: 'sidebar' | 'results' | 'education' | 'cog-effect';
   className?: string;
 }
@@ -83,4 +84,13 @@ export function Ad({ slot, className = '' }: AdProps) {
       </div>
     </div>
   );
+=======
+  slot?: 'sidebar' | 'results' | 'education' | 'cog-effect';
+  className?: string;
+}
+
+export function Ad({ className = '' }: AdProps) {
+  // Return empty div - ads removed as requested
+  return <div className={className}></div>;
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 }

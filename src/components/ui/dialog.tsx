@@ -6,9 +6,20 @@ import { cn } from "@/lib/utils"
 
 const Dialog = DialogPrimitive.Root
 
+<<<<<<< HEAD
 const DialogTrigger = DialogPrimitive.Trigger
 
 const DialogPortal = DialogPrimitive.Portal
+=======
+interface DialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+  className?: string;
+}
+
+const DialogTrigger = DialogPrimitive.Trigger
+
+const DialogPortal = DialogPrimitive.Portal
+DialogPortal.displayName = DialogPrimitive.Portal.displayName
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
 const DialogClose = DialogPrimitive.Close
 

@@ -2,7 +2,12 @@ import React from 'react';
 import { AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import type { ScoreRange } from '../types/assessment';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+<<<<<<< HEAD
 import { Progress } from '@/components/ui/progress';
+=======
+import { Progress } from '@/components/ui/progress'; 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
 interface DelusionalScoreProps {
   categoryName: string;
@@ -11,6 +16,14 @@ interface DelusionalScoreProps {
   gapScore: number;
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * Get the appropriate range for a delusional score
+ * @param gap The gap score between self and external assessment
+ * @returns ScoreRange object with label, color, and description
+ */
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 function getDelusionalRange(gap: number): ScoreRange {
   if (gap <= 10) {
     return {
@@ -47,6 +60,14 @@ function getDelusionalRange(gap: number): ScoreRange {
   }
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * Get the appropriate icon for a delusional score
+ * @param gap The gap score between self and external assessment
+ * @returns React element with the appropriate icon
+ */
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 function getIcon(gap: number) {
   if (gap <= 10) {
     return <CheckCircle className="w-6 h-6 text-emerald-500" />;
@@ -68,12 +89,29 @@ export function DelusionalScoreCard({
   return (
     <Card>
       <CardHeader>
+<<<<<<< HEAD
         <div className="flex items-start justify-between">
+=======
+        <div className="flex items-start justify-between gap-2">
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
           <div>
             <CardTitle>{categoryName}</CardTitle>
             <CardDescription>Gap Score: {gapScore.toFixed(1)}%</CardDescription>
           </div>
+<<<<<<< HEAD
           {getIcon(gapScore)}
+=======
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div>{getIcon(gapScore)}</div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{range.label}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         </div>
       </CardHeader>
 
@@ -86,12 +124,24 @@ export function DelusionalScoreCard({
           <Progress value={selfScore} className="h-2" />
         </div>
 
+<<<<<<< HEAD
         <div className="space-y-2">
+=======
+        <div className="space-y-2 mt-4">
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>External Score</span>
             <span className="font-semibold">{externalScore.toFixed(1)}%</span>
           </div>
+<<<<<<< HEAD
           <Progress value={externalScore} className="h-2 bg-secondary/50" />
+=======
+          <Progress 
+            value={externalScore} 
+            className="h-2 bg-secondary/50" 
+            style={{ '--progress-background': '#8b5cf6' } as React.CSSProperties}
+          />
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         </div>
 
         <div 
@@ -102,9 +152,24 @@ export function DelusionalScoreCard({
           }}
         >
           <p className="font-medium">{range.label}</p>
+<<<<<<< HEAD
           <p className="mt-1 opacity-90">{range.description}</p>
         </div>
       </CardContent>
+=======
+          <p className="mt-1 opacity-90 text-xs">{range.description}</p>
+        </div>
+      </CardContent>
+      <CardFooter className="pt-0">
+        <Button 
+          onClick={() => window.location.href = '/assessors'}
+          variant="outline"
+          className="w-full"
+        >
+          Request Assessment
+        </Button>
+      </CardFooter>
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
     </Card>
   );
 }

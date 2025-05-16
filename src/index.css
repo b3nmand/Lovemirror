@@ -68,6 +68,23 @@
   }
 }
 
+<<<<<<< HEAD
+=======
+/* Custom spinner animation */
+@keyframes custom-spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.custom-spinner {
+  animation: custom-spinner-rotate 2s linear infinite;
+}
+
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 /* Base styles */
 @layer base {
   body {
@@ -128,4 +145,28 @@
   .gradient-text {
     @apply bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 bg-clip-text text-transparent;
   }
+<<<<<<< HEAD
+=======
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+img, table, pre, code, .responsive-block {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.long-text, .breakable {
+  word-break: break-word;
+  overflow-wrap: break-word;
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 }

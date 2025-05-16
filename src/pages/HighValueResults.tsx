@@ -26,6 +26,10 @@ export function HighValueResults() {
   const navigate = useNavigate();
   const [assessment, setAssessment] = useState<Assessment | null>(null);
   const [loading, setLoading] = useState(true);
+<<<<<<< HEAD
+=======
+  const [error, setError] = useState('');
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
   useEffect(() => {
     fetchAssessment();
@@ -34,7 +38,13 @@ export function HighValueResults() {
   const fetchAssessment = async () => {
     try {
       setLoading(true);
+<<<<<<< HEAD
       setError('');
+=======
+      
+      // Initialize error state if it doesn't exist
+      let errorMessage = '';
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
 
       const { data, error } = await supabase
         .from('assessment_history')
@@ -44,7 +54,12 @@ export function HighValueResults() {
 
       if (error) {
         if (error.code === 'PGRST116') {
+<<<<<<< HEAD
           throw new Error('Assessment not found');
+=======
+          errorMessage = 'Assessment not found';
+          throw new Error(errorMessage);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
         }
         throw error;
       }
@@ -55,7 +70,12 @@ export function HighValueResults() {
         .eq('assessment_type', 'high-value');
 
       if (!categories?.length) {
+<<<<<<< HEAD
         throw new Error('Failed to load assessment categories');
+=======
+        errorMessage = 'Failed to load assessment categories';
+        throw new Error(errorMessage);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
       }
 
       const enrichedAssessment = {
@@ -83,7 +103,13 @@ export function HighValueResults() {
       }
     } catch (err) {
       console.error('Error fetching assessment:', err);
+<<<<<<< HEAD
       setError(err instanceof Error ? err.message : 'Failed to load assessment results');
+=======
+      // Define setError function if it doesn't exist
+      const errorMsg = err instanceof Error ? err.message : 'Failed to load assessment results';
+      console.error(errorMsg);
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
     } finally {
       setLoading(false);
     }
@@ -127,6 +153,18 @@ export function HighValueResults() {
     );
   }
 
+<<<<<<< HEAD
+=======
+  if (error) {
+    return (
+      <div className="p-8 text-center">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">Error Loading Assessment</h1>
+        <p className="text-gray-600">{error}</p>
+      </div>
+    );
+  }
+
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
   if (!assessment) {
     return (
       <div className="p-8 text-center">
@@ -192,9 +230,12 @@ export function HighValueResults() {
                 </div>
               </div>
             ))}
+<<<<<<< HEAD
             <div className="mt-8">
               <Ad slot="results" />
             </div>
+=======
+>>>>>>> 3f8dc85 (Initial commit of LoveMirror web app)
           </div>
 
           {/* Radar Chart */}
